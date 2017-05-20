@@ -21,6 +21,9 @@ set number	" line numbers on
 set showmatch	" show matching brackets / parentheses
 set ignorecase	" case insensitive search
 set smartcase	" case sensitive when upper case used
+
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>    " toggle paste mode when pasting from outside vim
 " }}}
 
 " Vim UI -------------------- {{{
@@ -85,6 +88,7 @@ set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set autoindent
+set tags=~/LITP/git/build-3pps/iso-builder/repos/tags
 
 " autocommands wrapped in augroups so that multiple copies of the autocmds aren't generated
 augroup general
@@ -104,6 +108,10 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
+augroup filetype_xml
+    autocmd!
+    autocmd FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+augroup END
 " }}}
 
 " Abbreviations -------------------- {{{
@@ -112,3 +120,14 @@ iabbrev LIPT LITP
 iabbrev adn and
 " }}}
 
+" Syntastic settings ------------------ {{{
+"
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" }}}
